@@ -1,14 +1,15 @@
-import _ from 'lodash';
-import PropTypes from 'prop-types';
 import React, {Component} from 'react';
+import PropTypes from 'prop-types';
 import {
   TouchableWithoutFeedback,
   Text,
   View} from 'react-native';
 import {shouldUpdate} from '../../../component-updater';
+import isEqual from 'lodash.isequal';
 
 import * as defaultStyle from '../../../style';
 import styleConstructor from './style';
+import {TouchableOpacity} from "react-native-calendars/src/calendar/day/basic";
 
 class Day extends Component {
   static displayName = 'IGNORE';
@@ -48,7 +49,7 @@ class Day extends Component {
   shouldComponentUpdate(nextProps) {
     const newMarkingStyle = this.getDrawingStyle(nextProps.marking);
 
-    if (!_.isEqual(this.markingStyle, newMarkingStyle)) {
+    if (!isEqual(this.markingStyle, newMarkingStyle)) {
       this.markingStyle = newMarkingStyle;
       return true;
     }
@@ -201,6 +202,7 @@ class Day extends Component {
           {fillers}
           <View style={containerStyle}>
             <Text allowFontScaling={false} style={textStyle}>{String(this.props.children)}</Text>
+            {this.props.checkCustomMark && this.props.customMarking && this.props.customMarking()}
           </View>
         </View>
       </TouchableWithoutFeedback>
