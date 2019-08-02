@@ -97,7 +97,7 @@ class Calendar extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    const current = parseDate(nextProps.current);
+    const current= parseDate(nextProps.current);
     if (current && current.toString('yyyy MM') !== this.state.currentMonth.toString('yyyy MM')) {
       this.setState({
         currentMonth: current.clone()
@@ -183,6 +183,8 @@ class Calendar extends Component {
           onLongPress={this.longPressDay}
           date={dateAsObject}
           marking={this.getDateMarking(day)}
+          checkCustomMark={this.checkCustomMark(day)}
+          customMarking={this.props.customMarking}
         >
           {date}
         </DayComp>
@@ -217,6 +219,19 @@ class Calendar extends Component {
     const dates = this.props.markedDates[day.toString('yyyy-MM-dd')] || EmptyArray;
     if (dates.length || dates) {
       return dates;
+    } else {
+      return false;
+    }
+  }
+
+  checkCustomMark(day) {
+    if (!this.props.customMarkedDates) {
+      return false;
+    }
+
+    const dates = this.props.customMarkedDates[day.toString('yyyy-MM-dd')];
+    if (dates) {
+      return true;
     } else {
       return false;
     }
