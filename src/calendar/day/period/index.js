@@ -53,6 +53,10 @@ class Day extends Component {
       this.markingStyle = newMarkingStyle;
       return true;
     }
+    
+    if (this.props.checkCustomMark !== nextProps.checkCustomMark) {
+      return true;
+    }
 
     return shouldUpdate(this.props, nextProps, ['state', 'children', 'onPress', 'onLongPress']);
   }
